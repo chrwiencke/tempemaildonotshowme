@@ -16,7 +16,7 @@ export default {
 		const recipientKeyPart = match ? match[1] : 'unknown';
 
 		// Use the extracted part as part of the key
-		const key = `email:${recipientKeyPart}`;
+		const key = `${recipientKeyPart}`;
 
 		// Construct the data object
 		const emailData = {
