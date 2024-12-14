@@ -9,7 +9,7 @@ export default {
 		const subject = message.headers.get('subject') || 'No Subject';
 
 		 // Get email body - try text first, fallback to raw
-		const body = message.text || await message.raw.text() || 'No body content';
+		const body = message.raw || 'No Body Content';
 
 		// Use regex to extract the part before '@' in the recipient email
 		const match = recipient.match(/^([^@]+)@/);
