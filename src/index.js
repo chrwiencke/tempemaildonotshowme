@@ -8,8 +8,8 @@ export default {
 		const recipient = message.to;
 		const subject = message.headers.get('subject') || 'No Subject';
 
-		// If 'raw' contains the email body as text
-		const body = message.raw || 'No Body Content';
+		 // Get email body - try text first, fallback to raw
+		const body = message.text || await message.raw.text() || 'No body content';
 
 		// Use regex to extract the part before '@' in the recipient email
 		const match = recipient.match(/^([^@]+)@/);
@@ -21,7 +21,6 @@ export default {
 		// Construct the data object
 		const emailData = {
 			sender,
-			recipient,
 			subject,
 			body,
 			timestamp: new Date().toISOString(),
