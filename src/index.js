@@ -30,7 +30,7 @@ export default {
 			};
 
 			// Save the email data to KV store
-			await env.EMAIL_STORE.put(key, JSON.stringify(emailData));
+			await env.EMAIL_STORE.put(key, JSON.stringify(emailData), { expirationTtl: 3600 });
 
 			// Return a success response
 			return new Response(`Email from ${sender} to ${recipient} saved with key "${key}".`, { status: 200 });
