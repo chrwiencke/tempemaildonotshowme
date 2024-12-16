@@ -32,6 +32,11 @@ export default {
 			// Save the email data to KV store
 			await env.EMAIL_STORE.put(key, JSON.stringify(emailData), { expirationTtl: 3600 });
 
+			let count = await KV.get("request_count");
+			count = count ? parseInt(count, 10) : 0;
+			count += 1;
+			await env.COUNT_EMAIL.put("request_count", count.toString());
+
 			// Return a success response
 			return new Response(`Email from ${sender} to ${recipient} saved with key "${key}".`, { status: 200 });
 		} catch (error) {
