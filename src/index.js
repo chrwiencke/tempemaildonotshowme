@@ -9,11 +9,12 @@ export default {
 			const recipient = message.to;
 			const subject = message.headers.get('subject') || 'No Subject';
 
+			// Get email content
 			let rawEmail = new Response(message.raw);
 			let arrayBuffer = await rawEmail.arrayBuffer();
 			const parser = new PostalMime.default();
 			const email = await parser.parse(arrayBuffer);
-			const rawBody = email.text || convert(email.html || '(No Content)');
+			const rawBody = email.html || email.text;
 
 			// Extract the recipient key from the email address
 			const match = recipient.match(/^([^@]+)@/);
