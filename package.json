@@ -14,7 +14,6 @@
     "wrangler": "^3.60.3"
   },
   "dependencies": {
-    "html-to-text": "^9.0.5",
     "postal-mime": "^2.3.2"
   }
 }

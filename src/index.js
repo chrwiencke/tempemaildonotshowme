@@ -1,5 +1,4 @@
 const PostalMime = require('postal-mime');
-const { convert } = require('html-to-text');
 
 export default {
 	async email(message, env) {
