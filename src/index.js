@@ -1,5 +1,11 @@
 const PostalMime = require('postal-mime');
 
+// Add UUID validation function
+const isValidUUID = (uuid) => {
+    const regex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+    return regex.test(uuid);
+};
+
 export default {
 	async email(message, env) {
 		try {
@@ -20,6 +26,12 @@ export default {
 			const recipientKeyPart = match ? match[1] : 'unknown';
 			const key = `${recipientKeyPart}`;
 
+			 // Validate UUID
+            if (!isValidUUID(key)) {
+                console.error('Invalid UUID format:', key);
+                return new Response('Invalid recipient key format. Expected UUID.', { status: 400 });
+            }
+
 			// Construct the email data to store
 			const emailData = {
 				sender,
@@ -31,20 +43,6 @@ export default {
 
 			// Save the email data to KV store
 			await env.EMAIL_STORE.put(key, JSON.stringify(emailData), { expirationTtl: 3600 });
-
-			// Count emails recieved
-			const countKey = "request_count";
-			let count = await env.ANALYTICS_STORE.get(countKey);
-			count = count ? parseInt(count, 10) : 0;
-			count += 1;
-			await env.ANALYTICS_STORE.put(countKey, count.toString());
-			
-			// Use the sender as the key for the sender's count
-			let countOfSender = await env.ANALYTICS_STORE.get(sender);
-			countOfSender = countOfSender ? parseInt(countOfSender, 10) : 0;
-			countOfSender += 1;
-			await env.ANALYTICS_STORE.put(sender, countOfSender.toString()); 
-
 
 			// Return a success response
 			return new Response(`Email from ${sender} to ${recipient} saved with key "${key}".`, { status: 200 });

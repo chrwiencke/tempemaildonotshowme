@@ -13,7 +13,3 @@ enabled = true
 [[kv_namespaces]]
 binding = "EMAIL_STORE"
 id = "85761845d9484c839f6a0ebd0a2ff029"
-
-[[kv_namespaces]]
-binding = "ANALYTICS_STORE"
-id = "dc5229897cc14b2e8e2f348aa2928173"
