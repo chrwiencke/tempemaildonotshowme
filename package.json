@@ -11,7 +11,7 @@
   "devDependencies": {
     "@cloudflare/vitest-pool-workers": "^0.5.2",
     "vitest": "2.1.8",
-    "wrangler": "^3.60.3"
+    "wrangler": "^3.114.17"
   },
   "dependencies": {
     "postal-mime": "^2.3.2"
